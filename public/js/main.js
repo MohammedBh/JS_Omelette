@@ -1,110 +1,25 @@
-//------------ CREATION PERSONNE ------------//
-let personne = {
-    nom: "Moha",
-    lieu: "Maison",
-    argent: 50,
-    mainDroite: [],
-    mainGauche: [],
-    seDeplacer(nom) {
-        this.lieu=nom;
-        console.log(`${personne.nom} se deplace vers ${nom}`);
-    },
-    payerArticle(ingredient) {
-        personne.argent -= ingredient.prix
-    },
-    couper (outil){
-        bol.contenu.forEach(element => {
-            if (element.etat == "entier" ) {
-                element.etat = outil.action
-            }
-        });
-    }
-}
-
-//------------ CREATION MAISON ------------//
-let maison = {
-    nom: "maison",
-    personne: []
-}
-
-//------------ CREATION OUTIL ------------//
-let outil = {
-    nom: "couteau",
-    action: "coupé"
-}
-
-//------------ CREATION INGREDIENTS ------------//
-class Ingredients {
-    constructor(nom, etat, prix) {
-        this.nom = nom,
-        this.etat = etat,
-        this.prix = prix
-    }
-}
-let oignon = new Ingredients("oignon", "coupé", 9);
-let oeuf = new Ingredients("oeuf", "entier", 5);
-let epice = new Ingredients("epice", "moulu", 2);
-let fromage = new Ingredients("fromage", "entier", 7);
-
-//------------ CREATION EPICERIE ------------//
-let epicerie = {
-    nom: "epicerie",
-    personnes: [],
-    paniers: [
-        panier1 ={
-            type: "panier",
-            contenu: []
-        },
-        panier2 ={
-            type: "panier",
-            contenu: []
-        }
-    ],
-        ingredients : [oignon, oeuf, epice, fromage]
-    }
-
-//------------ CREATION POELE ------------//
-let poele ={
-    contenu: [],
-    cuire() {
-        setTimeout(()=> {
-            this.contenu[0].etat = "cuite";
-            console.log(`Notre omelette est ${this.contenu[0].etat}`);
-        }, 4000)
-    }
-}
-
-//------------ CREATION BOL ------------//
-let bol = {
-    contenu: [],
-    melanger(nomMelange) {
-        newMelange = {
-            nom: nomMelange,
-            etat: "pas cuit"
-        }
-        this.contenu.splice(0,4, newMelange)
-    }
-}
+import { Ingredients } from "./modules/class.js";
+import { personne, maison, outil, epicerie, poele, bol  } from "./modules/objet.js";
 
 //-------------------- DEBUT DE L'OMELETTE --------------------//
 
 // Avec l'objet personnage, utiliser la method seDeplacer et de passer en paramètre l'objet maison
 // console.log(personnage.nom + " est actuellement à la " + personnage.lieu);
-personne.seDeplacer(maison.nom)
+personne.seDeplacer(maison.nom);
 console.log(`${personne.nom} est actuellement à la ${personne.lieu}`);
 
 // Pour aller à l'épicerie acheter les ingrédients pour l'omelette, je répète la première étape en changeant le parametre de la method seDeplacer par l'epicerie
 // console.log(personnage.nom + " est actuellement à la " + personnage.lieu);
-personne.seDeplacer(epicerie.nom)
+personne.seDeplacer(epicerie.nom);
 console.log(`${personne.nom} est actuellement à l'${personne.lieu}`);
 
 // Mon personnage prend un des paniers dans l'épicerie (il récupère le panier dans les objets de l'épicerie et le met dans sa main droite.)
 console.log(epicerie.paniers);
-personne.mainDroite.push(epicerie.paniers[0])
+personne.mainDroite.push(epicerie.paniers[0]);
 console.log(`${personne.nom} a pris un ${epicerie.paniers[0].type}`);
 
 // console.log(`${personnage.nom} a pris un ${type du panier}`);
-epicerie.paniers.pop()
+epicerie.paniers.pop();
 console.log(epicerie.paniers);
 
 //-----BOUCLE-----//
@@ -117,13 +32,13 @@ epicerie.ingredients.forEach(element => {
 
 // Payer chaque ingrédient récupéré dans le panier. Avec une boucle aussi, on va les passer 1 à 1 dans la fonction payerArticle()
 personne.mainDroite[0].contenu.forEach(element => {
-    personne.payerArticle(element)})
+    personne.payerArticle(element)});
 
 // Afficher un message de ce qu'il reste d'argent sur le personnage.
 console.log(`Il reste ${personne.argent}€.`);
 
 // rentrer à la maison (comme ça on pourra cuisiner)
-personne.seDeplacer(maison.nom)
+personne.seDeplacer(maison.nom);
 
 // Mettre chaque ingrédient dans le bol (1 à 1 donc avec une boucle)
 personne.mainDroite[0].contenu.forEach(element => {
@@ -131,7 +46,7 @@ personne.mainDroite[0].contenu.forEach(element => {
 });
 
 // Vérifier que les ingrédients ne se trouvent plus dans le panier (oups ! on a oublié de le rapporter x)
-personne.mainDroite[0].contenu = []
+personne.mainDroite[0].contenu = [];
 console.log(personne.mainDroite[0].contenu);
 
 // Afficher un petit message de chaque ingrédient qu'on met dans le bol.
@@ -139,31 +54,28 @@ console.log(bol.contenu);
 
 // Retourner à l'épicerie pour rapporter le panier. (donc seDeplacer puis enlever le panier de la main droite et le remetre dans les paniers de l'épicerie.)
 // Afficher un petit message
-personne.seDeplacer(epicerie.nom)
-epicerie.paniers.push(personne.mainDroite[0])
-personne.mainDroite.pop()
+personne.seDeplacer(epicerie.nom);
+epicerie.paniers.push(personne.mainDroite[0]);
+personne.mainDroite.pop();
 console.log(personne.mainDroite);
 console.log(epicerie.paniers);
 
 // Retourner à la maison pour continuer l'omelette
 // Afficher un petit message
-personne.seDeplacer(maison.nom)
+personne.seDeplacer(maison.nom);
 
 // Vérifier chaque ingrédient dans le bol et le couper seulement s'il est entier ! Pour ça on utilise la méthode couper de personnage
-personne.couper(outil)
+personne.couper(outil);
 
 // Mélanger le contenu du bol avec la méthode melanger. on va nommer ce mélange une 'omelette' (à passer en param).
 // Afficher un message avec le nouveau mélange
-bol.melanger("omelette")
+bol.melanger("omelette");
 console.log(`On melange et on obtient l'${bol.contenu[0].nom}`);
 
 // vider le contenu du bol dans la poele. Il ne doit plus rien avoir dans le bol et y avoir juste l'omelette pas cuite.
-poele.contenu.push(bol.contenu[0])
-bol.contenu = []
-console.log(`${personne.nom} verse tout dans la poele`);
-console.log(bol.contenu);
-console.log(poele.contenu);
+poele.contenu.push(bol.contenu[0]);
+bol.contenu = [];
 
 // Cuire l'omelette avec la méthode de la poele
 // Afficher un message final, notre omelette est cuite :)
-poele.cuire()
+poele.cuire();
